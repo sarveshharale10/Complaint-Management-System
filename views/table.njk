@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+		<title>Complaint managment system</title>
+		<style>
+table, th, td {
+  border: 1px solid black;
+	width:20px;
+height:30px;
+
+}
+		
+            
+        .container {
+       			 background-color: antiquewhite;    
+            }
+		
+		.table{
+			margin:auto;
+			width: 40%;
+			padding: 15px;
+			background-color:antiquewhite ;
+			 border: 1px solid black;
+}
+		</style>
+	
+	<body>
+	<center><h1> VJTI COMPLAINT MANAGMENT SYSTEM </h1></center>
+        <div class="container">
+		
+
+<div class="container">
+ <center> <h2> Table</h2></center>
+
+  <table class="table  ">
+
+      <tr>
+        <th>Complaint No</th>
+        <th>Description</th>
+        <th>Status</th>
+      </tr>
+
+      {% for row in rows %}
+      <tr>
+        <td>{{ row.complaintId }}</td>
+        <td>{{ row.description }}</td>
+        <td><button type="button"  onclick="">resolved</button></td>
+      </tr>
+      {% endfor %}
+
+      
+      
+  </table>
+</div>
+</html>

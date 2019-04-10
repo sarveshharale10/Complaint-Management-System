@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Complaint managment system</title>
+		<style>
+            
+        .container{
+        background-color: antiquewhite;    
+            }
+		.login-form {
+			width: 300px;
+			margin: 0 auto;
+			font-family: Tahoma, Geneva, sans-serif;
+		}
+		.login-form h1 {
+			text-align: center;
+			color: #4d4d4d;
+			font-size: 24px;
+			padding: 20px 0 20px 0;
+		}
+		.login-form input[type="email"],
+		.login-form input[type="text"],
+            textarea,select{
+			width: 100%;
+			padding: 15px;
+			border: 1px solid #dddddd;
+			margin-bottom: 15px;
+			box-sizing:border-box;
+		}
+		.login-form button {
+			width: 40%;
+			padding: 15px;
+			background-color: blue;
+			border: 0;
+			box-sizing: border-box;
+			cursor: pointer;
+			font-weight: bold;
+			color: white;
+		}
+		</style>
+	</head>
+	<body>
+	<center><h1> VJTI COMPLAINT MANAGMENT SYSTEM </h1></center>
+        <div class="container">
+		<div class="login-form">
+			<h3><center>Complaint Form</center></h3>
+			<form action="/complaint" method="POST">
+    
+                <label for="usr">Name:</label>
+                <input type="text" class="form-control" id="usr" placeholder="Enter name" name="user" disabled value="{{ username }}" />   
+
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+    
+                <label for="contact">Contact Number:</label>
+                <input type="text" class="form-control" id="contact" placeholder="Enter mobile number" name="contact">
+    
+                <label for"desc">Description:</label>
+                <textarea class="form-control" id="desc" rows="3" name="desc">
+                </textarea>    
+    
+                <label for="complaint">Complaint type:</label>
+                    <select class="form-control" id="complaint">
+                        <option>--Select type--</option>
+                        <option>Blue screen of death</option>
+                        <option>Malware</option>
+                        <option>Software issues</option>
+                        <option>Hardware failure</option>
+                        <option>Network issues</option>
+                        <option>Overheating</option>
+                        <option>Strange noises</option>
+                        <option>Other</option>
+                    </select>  
+                
+                &nbsp;&nbsp;&nbsp;
+                <button type="submit" class="btn btn-default">Submit</button>
+                &nbsp;&nbsp;
+                <button type="button" class="btn btn-default">Back</button>
+			</form>
+		</div>
+        </div>
+	</body>
+</html>

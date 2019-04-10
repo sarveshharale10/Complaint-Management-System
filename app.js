@@ -19,11 +19,11 @@ nunjucks.configure('views', {
 
 app.use(bodyParser.urlencoded({extended:true}));
 
-/*app.get("/form",function(req,res){
+app.get("/form",function(req,res){
     res.render("form.njk");
 });
 
-app.post("/login",function(req,res){
+/*app.post("/login",function(req,res){
     res.render("first_template.njk",{name:req.body.username});
 });*/
 

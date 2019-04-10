@@ -1,8 +1,10 @@
 var mysql = require('mysql');
 var express = require('express');
+var app = express();
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var path = require('path');
+var nunjucks = require('nunjucks');
 
 var connection = mysql.createConnection({
 	host     : 'localhost',
@@ -11,7 +13,11 @@ var connection = mysql.createConnection({
 	database : 'cms'
 });
 
-var app = express();
+nunjucks.configure('views', {
+    autoescape: true,
+    express: app
+});
+
 app.use(session({
 	secret: 'secret',
 	resave: true,
@@ -21,7 +27,7 @@ app.use(bodyParser.urlencoded({extended : true}));
 
 
 app.get('/', function(request, response) {
-	response.sendFile(path.join(__dirname + '/login.html'));
+	response.render("login.njk");
 });
 
 app.post('/auth', function(request, response) {
@@ -40,7 +46,6 @@ app.post('/auth', function(request, response) {
 			}
 		});
 	});
-	
 });
 
 
@@ -51,6 +56,33 @@ app.get('/home', function(request, response) {
 		response.send('Please login to view this page!');
 	}
 	response.end();
+});
+
+app.get("/complaint",function(req,res){
+	res.render("complaintform.njk",{username:req.session.username});
+});
+
+app.post("/complaint",function(req,res){
+	var email = req.body.email;
+	var contact = req.body.contact;
+	var desc = req.body.desc;
+	var query = "insert into complaint(username,email,contact,description) values('"+req.session.username+"','"+email+"','"+contact+"','"+desc+"')";
+	connection.connect(function(error){
+		connection.query(query,function(err,result){
+			if(err) throw err;
+			res.send("Complaint added");
+		});
+	});
+});
+
+app.get("/assigned",function(req,res){
+	var query = "select complaint.complaintId,complaint.description from complaint,complaintAssignment where complaint.complaintId=complaintAssignment.id and assigned='"+req.session.username+"'";
+	connection.connect(function(error){
+		connection.query(query,function(err,result){
+			if(err) throw err;
+			res.render("table.njk",{rows:result});
+		});
+	});
 });
 
 app.listen(8000);
