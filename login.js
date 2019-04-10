@@ -85,4 +85,14 @@ app.get("/assigned",function(req,res){
 	});
 });
 
+app.get("/admin",function(req,res){
+	var query = "select complaintId,username,description from complaint where complaintId not in(select id from complaintAssignment)";
+	connection.connect(function(error){
+		connection.query(query,function(err,result){
+			if(err) throw err;
+			res.render("admin.njk",{rows:result});
+		});
+	});
+});
+
 app.listen(8000);
