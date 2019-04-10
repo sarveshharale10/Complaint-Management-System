@@ -23,6 +23,11 @@ height:30px;
 			 border: 1px solid black;
 }
 		</style>
+    <script>
+      function closeComplaint(complaintId){
+
+      }
+    </script>
 	
 	<body>
 	<center><h1> VJTI COMPLAINT MANAGMENT SYSTEM </h1></center>
@@ -32,7 +37,7 @@ height:30px;
 <div class="container">
  <center> <h2> Table</h2></center>
 
-  <table class="table  ">
+  <table class="table">
 
       <tr>
         <th>Complaint No</th>
@@ -44,12 +49,9 @@ height:30px;
       <tr>
         <td>{{ row.complaintId }}</td>
         <td>{{ row.description }}</td>
-        <td><button type="button"  onclick="">resolved</button></td>
+        <td><button type="button" onclick="closeComplaint({{ row.complaintId }})">Close</button></td>
       </tr>
       {% endfor %}
-
-      
-      
   </table>
 </div>
 </html>

@@ -37,8 +37,13 @@
     </div>
 
     <div class="form-group">
-       <label for="enggId">Engineer ID:</label>
-        <input type="textfield" class="form-control" id="enggId" name="enggId" placeholder="Enter Engineer" style="width:300px;">
+       <label for="enggId">Engineer:</label>
+        <select class="form-control" id="enggId" name="enggId">
+            <option>Select Engineer</option>
+            {% for engineer in engineers %}
+            <option value="{{ engineer.username }}">{{ engineer.username }}</option>
+            {% endfor %}
+        </select> 
     </div>
   
     <button type="submit" style="border:1px solid black; " class="btn btn-default">Send</button>

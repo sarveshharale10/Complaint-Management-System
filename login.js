@@ -3,8 +3,8 @@ var express = require('express');
 var app = express();
 var session = require('express-session');
 var bodyParser = require('body-parser');
-var path = require('path');
 var nunjucks = require('nunjucks');
+var flash = require("express-flash");
 
 var connection = mysql.createConnection({
 	host     : 'localhost',
@@ -18,6 +18,8 @@ nunjucks.configure('views', {
     express: app
 });
 
+app.use(flash());
+
 app.use(session({
 	secret: 'secret',
 	resave: true,
@@ -27,7 +29,7 @@ app.use(bodyParser.urlencoded({extended : true}));
 
 
 app.get('/', function(request, response) {
-	response.render("login.njk");
+	response.render("login.njk",{req:request});
 });
 
 app.post('/auth', function(request, response) {
@@ -40,9 +42,19 @@ app.post('/auth', function(request, response) {
 			if (result.length > 0) {
 				request.session.loggedin = true;
 				request.session.username = username;
-				response.redirect('/home');
+				var userType = result[0].type;
+				if(userType == 0){
+					response.redirect("/admin");
+				}
+				else if(userType == 1){
+					response.redirect("/assigned");
+				}
+				else if(userType == 2){
+					response.redirect("/complaint");
+				}
 			} else {
-				response.send('Incorrect Username and/or Password!');
+				request.flash("invalid","Invalid Username and/or Password");
+				response.redirect("/");
 			}
 		});
 	});
@@ -86,13 +98,30 @@ app.get("/assigned",function(req,res){
 });
 
 app.get("/admin",function(req,res){
+	var engineersQuery = "select username from user where type=1";
+
 	var query = "select complaintId,username,description from complaint where complaintId not in(select id from complaintAssignment)";
 	connection.connect(function(error){
-		connection.query(query,function(err,result){
+		connection.query(query,function(err,complaints){
 			if(err) throw err;
-			res.render("admin.njk",{rows:result});
+			connection.query(engineersQuery,function(err,engineers,fields){
+				if(err) throw err;
+				res.render("admin.njk",{rows:complaints,engineers:engineers});
+			});
 		});
 	});
 });
 
-app.listen(8000);
+app.post("/assign",function(req,res){
+	var complaintId = req.body.complaintId;
+	var enggId = req.body.enggId;
+	var query = "insert into complaintAssignment values("+complaintId+",'"+enggId+"')";
+	connection.connect(function(error){
+		connection.query(query,function(err,result){
+			if(err) throw err;
+			res.redirect("/admin");
+		});
+	});
+});
+
+app.listen(80);
