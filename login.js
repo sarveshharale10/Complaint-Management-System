@@ -60,16 +60,6 @@ app.post('/auth', function(request, response) {
 	});
 });
 
-
-app.get('/home', function(request, response) {
-	if (request.session.loggedin) {
-		response.send('Welcome back, ' + request.session.username + '!');
-	} else {
-		response.send('Please login to view this page!');
-	}
-	response.end();
-});
-
 app.get("/complaint",function(req,res){
 	res.render("complaintform.njk",{username:req.session.username});
 });
@@ -78,17 +68,18 @@ app.post("/complaint",function(req,res){
 	var email = req.body.email;
 	var contact = req.body.contact;
 	var desc = req.body.desc;
-	var query = "insert into complaint(username,email,contact,description) values('"+req.session.username+"','"+email+"','"+contact+"','"+desc+"')";
+	var query = "insert into complaint(username,email,contact,description,status) values('"+req.session.username+"','"+email+"','"+contact+"','"+desc+"',"+0+")";
 	connection.connect(function(error){
 		connection.query(query,function(err,result){
 			if(err) throw err;
-			res.send("Complaint added");
+			req.flash("successful","Complaint Successfully Added");
+			res.redirect("/complaint");
 		});
 	});
 });
 
 app.get("/assigned",function(req,res){
-	var query = "select complaint.complaintId,complaint.description from complaint,complaintAssignment where complaint.complaintId=complaintAssignment.id and assigned='"+req.session.username+"'";
+	var query = "select complaint.complaintId,complaint.description from complaint,complaintAssignment where complaint.complaintId=complaintAssignment.id and complaint.status=0 and assigned='"+req.session.username+"'";
 	connection.connect(function(error){
 		connection.query(query,function(err,result){
 			if(err) throw err;
@@ -97,10 +88,25 @@ app.get("/assigned",function(req,res){
 	});
 });
 
+app.post("/assigned",function(req,res){
+	var complaintId = req.body.complaintId;
+	var query = "delete from complaintAssignment where id="+complaintId+" and assigned='"+req.session.username+"'";
+	connection.connect(function(error){
+		connection.query(query,function(err,result){
+			if(err) throw err;
+		});
+		query = "update complaint set status=1 where complaintId="+complaintId;
+		connection.query(query,function(err,result){
+			if(err) throw err;
+			res.redirect("/assigned");
+		});
+	});
+});
+
 app.get("/admin",function(req,res){
 	var engineersQuery = "select username from user where type=1";
 
-	var query = "select complaintId,username,description from complaint where complaintId not in(select id from complaintAssignment)";
+	var query = "select complaintId,username,description from complaint where complaintId not in(select id from complaintAssignment) and status=0";
 	connection.connect(function(error){
 		connection.query(query,function(err,complaints){
 			if(err) throw err;

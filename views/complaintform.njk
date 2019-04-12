@@ -58,20 +58,7 @@
     
                 <label for"desc">Description:</label>
                 <textarea class="form-control" id="desc" rows="3" name="desc">
-                </textarea>    
-    
-                <label for="complaint">Complaint type:</label>
-                    <select class="form-control" id="complaint">
-                        <option>--Select type--</option>
-                        <option>Blue screen of death</option>
-                        <option>Malware</option>
-                        <option>Software issues</option>
-                        <option>Hardware failure</option>
-                        <option>Network issues</option>
-                        <option>Overheating</option>
-                        <option>Strange noises</option>
-                        <option>Other</option>
-                    </select>  
+                </textarea>
                 
                 &nbsp;&nbsp;&nbsp;
                 <button type="submit" class="btn btn-default">Submit</button>
@@ -80,5 +67,8 @@
 			</form>
 		</div>
         </div>
+		<div>
+		<center>{{ messages.successful }}</center>
+		</div>
 	</body>
 </html>
