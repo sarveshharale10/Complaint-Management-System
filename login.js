@@ -5,6 +5,7 @@ var session = require('express-session');
 var bodyParser = require('body-parser');
 var nunjucks = require('nunjucks');
 var flash = require("express-flash");
+var path = require("path");
 
 var connection = mysql.createConnection({
 	host     : 'localhost',
@@ -27,6 +28,7 @@ app.use(session({
 }));
 app.use(bodyParser.urlencoded({extended : true}));
 
+app.use(express.static(path.join(__dirname,"/public")));
 
 app.get('/', function(request, response) {
 	response.render("login.njk",{req:request});
@@ -61,7 +63,12 @@ app.post('/auth', function(request, response) {
 });
 
 app.get("/complaint",function(req,res){
-	res.render("complaintform.njk",{username:req.session.username});
+	if(req.session.username){
+		res.render("complaintform.njk",{username:req.session.username});
+	}
+	else{
+		res.redirect("/");
+	}
 });
 
 app.post("/complaint",function(req,res){
@@ -104,18 +111,23 @@ app.post("/assigned",function(req,res){
 });
 
 app.get("/admin",function(req,res){
-	var engineersQuery = "select username from user where type=1";
+	if(req.session.username){
+		var engineersQuery = "select username from user where type=1";
 
-	var query = "select complaintId,username,description from complaint where complaintId not in(select id from complaintAssignment) and status=0";
-	connection.connect(function(error){
-		connection.query(query,function(err,complaints){
-			if(err) throw err;
-			connection.query(engineersQuery,function(err,engineers,fields){
+		var query = "select complaintId,username,description from complaint where complaintId not in(select id from complaintAssignment) and status=0";
+		connection.connect(function(error){
+			connection.query(query,function(err,complaints){
 				if(err) throw err;
-				res.render("admin.njk",{rows:complaints,engineers:engineers});
+				connection.query(engineersQuery,function(err,engineers,fields){
+					if(err) throw err;
+					res.render("admin.njk",{rows:complaints,engineers:engineers});
+				});
 			});
 		});
-	});
+	}
+	else{
+		res.redirect("/");
+	}
 });
 
 app.post("/assign",function(req,res){
@@ -128,6 +140,14 @@ app.post("/assign",function(req,res){
 			res.redirect("/admin");
 		});
 	});
+});
+
+app.get("/logout",function(req,res){
+	if(req.session){
+		req.session.destroy(function(err){
+			res.redirect("/")
+		});
+	}
 });
 
 app.listen(80);
