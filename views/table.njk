@@ -1,40 +1,39 @@
 <!DOCTYPE html>
-<html>
-
-		<title>Complaint managment system</title>
-		<style>
-table, th, td {
-  border: 1px solid black;
-	width:20px;
-height:30px;
-
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bootstrap Login Form </title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+<style type="text/css">
+	 body {
+		color: #fff;
+		/* background-color:#1B4F72; */
+		font-family: 'Roboto', sans-serif;
+	    color: black; 
+	}
+.container { padding: 70px 0 30px; }
+ #btn1 {
+    float:right;
+	padding-right:47%;
+   }
+.table {
+  width: 600px;
+  position: relative;  
 }
-		
-            
-        .container {
-       			 background-color: antiquewhite;    
-            }
-		
-		.table{
-			margin:auto;
-			width: 40%;
-			padding: 15px;
-			background-color:antiquewhite ;
-			 border: 1px solid black;
-}
-		</style>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	
-	<body>
-	<center><h1> VJTI COMPLAINT MANAGMENT SYSTEM </h1></center>
-        <div class="container">
-		
-
+.table-dark:hover {background-color: #000428;} 
+</style>
+</head>
+<body>
+<center> 
 <div class="container">
- <center> <h2> Table</h2></center>
   <form method="POST" action="/assigned">
   <input type="hidden" name="complaintId" id="complaintId" />
-  <table class="table">
+  <table class="table table-bordered">
 
       <tr>
         <th>Complaint No</th>
@@ -50,12 +49,18 @@ height:30px;
       {% endfor %}
   </table>
   </form>
-  <a href="/logout">Logout</a>
-</div>
+</div> </center>
+<div id="btn1">
+    <button type="button" class="btn1 btn-default btn-sm">
+          <span class="glyphicon glyphicon-log-out"></span> Log out
+        </button>
+</div>	
 <script>
       function closeComplaint(complaintId){
         $("#complaintId").val(complaintId);
         $("form").submit();
       }
 </script>
-</html>
+</body>
+
+</html>                            
