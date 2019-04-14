@@ -60,6 +60,10 @@
 		padding: 15px;
 		box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
 	}
+	.alert{
+		width:350px;
+		margin:0 auto;
+	}
 	.login-form .avatar img {
 		width: 100%;
 	}	
@@ -99,7 +103,7 @@
 <div class="login-form">
     <form action="/auth" method="post">
 		<div class="avatar">
-			<img src="C:\Users\Sony\Documents\files\wt\avatar4.png" alt="Avatar">
+			<img src="public/avatar4.png" alt="Avatar">
 		</div>
         <h2 class="text-center" >Member Login</h2>   
         <div class="form-group">
@@ -113,6 +117,12 @@
         </div>
 		
     </form>
+</div>
+{% if messages.invalid %}
+<div class="alert alert-danger alert-dismissible">
+<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+{{ messages.invalid }}
+{% endif %}
 </div>
 </body>
 </html>                            

@@ -12,7 +12,6 @@
 <style type="text/css">
 	 body {
 		color: #fff;
-		/* background-color:#1B4F72; */
 		font-family: 'Roboto', sans-serif;
 	    color: black; 
 	}
@@ -20,6 +19,10 @@
  #btn1 {
     float:right;
 	padding-right:47%;
+   }
+   .alert{
+     width:350px;
+     margin:0 auto;
    }
 .table {
   width: 600px;
@@ -44,17 +47,17 @@
       <tr>
         <td>{{ row.complaintId }}</td>
         <td>{{ row.description }}</td>
-        <td><button type="button" onclick="closeComplaint({{ row.complaintId }})">Close</button></td>
+        <td><button type="button" class="btn btn-danger" onclick="closeComplaint({{ row.complaintId }})">Close</button></td>
       </tr>
       {% endfor %}
   </table>
   </form>
 </div> </center>
 <div id="btn1">
-    <button type="button" class="btn1 btn-default btn-sm">
+    <a href="/logout"><button type="button" class="btn1 btn-default btn-sm">
           <span class="glyphicon glyphicon-log-out"></span> Log out
-        </button>
-</div>	
+        </button></a>
+</div>
 <script>
       function closeComplaint(complaintId){
         $("#complaintId").val(complaintId);

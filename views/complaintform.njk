@@ -33,6 +33,10 @@
 		padding: 0px 0 30px;	
         color:black;		
 	}
+	.alert{
+		width:350px;
+		margin:0 auto;
+	}
 	.login-form form {
 		color: black;
 		border-radius: 2px;
@@ -98,16 +102,22 @@
                 &nbsp;&nbsp;&nbsp;
                <br> <button type="submit" class="btn btn-default">Submit</button>
                 &nbsp;&nbsp;
-                <button type="button" class="btn btn-default">Back</button>
 				<div id="btn1">
-    <button type="button" class="btn1 btn-default btn-sm">
+    	<a href="/logout"><button type="button" class="btn1 btn-default btn-sm">
           <span class="glyphicon glyphicon-log-out"></span> Log out
-        </button>
+        </button></a>
 </div>	
-			</form>
+</form>
 </div>
 <div>
-<center>{{ messages.successful }}</center>
+<center>
+{% if messages.successful %}
+<div class="alert alert-success alert-dismissible">
+<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+{{ messages.successful }}
+</div>
+{% endif %}
+</center>
 </div>
 </body>
 </html>                            

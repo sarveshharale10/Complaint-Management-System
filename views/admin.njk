@@ -35,6 +35,10 @@
 		padding: 32px 0 30px;
         color: black;		
 	}
+  .alert{
+    width: 350px;
+		margin: 0 auto;
+  }
 	.login-form form {
 		color: #7a7a7a;
 		border-radius: 2px;
@@ -95,9 +99,9 @@
     <tbody>
       {% for row in rows %}
       <tr>
-        <td class="table-dark">{{ row.complaintId }}</td>
-        <td class="table-dark">{{ row.username }}</td>
-        <td class="table-dark">{{ row.description }}</td>
+        <td>{{ row.complaintId }}</td>
+        <td>{{ row.username }}</td>
+        <td>{{ row.description }}</td>
       </tr>
       {% endfor %}
       </tbody>
@@ -105,7 +109,7 @@
 </div> </center>
 
 <div class="login-form">
- <form action="/auth" method="post">
+ <form action="/assign" method="post">
     <div class="form-group">
     <label for="enggId">Complaint Number </label>
 	<input type="text" class="form-control" id="complaintId" name="complaintId" placeholder="Complaint Id" required="required">
@@ -122,15 +126,19 @@
     </div>
   
     <div class="form-group">
-            <button type="submit" class="btn btn-primary btn-lg btn-block">Send</button>
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Assign</button>
         </div>
 		<div id="btn1">
-    <button type="button" class="btn1 btn-default btn-sm">
+    <a href="/logout"><button type="button" class="btn1 btn-default btn-sm">
           <span class="glyphicon glyphicon-log-out"></span> Log out
-        </button>
+        </button></a>
 		</div>
   </form>
 </div>
-
+{% if messages.successful %}
+<div class="alert alert-success alert-dismissible">
+<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+{{ messages.successful }}
+{% endif %}
 </body>
 </html>                            
