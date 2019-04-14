@@ -1,16 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bootstrap Login Form </title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+<style type="text/css">
+	 body {
+		color: #fff;
+		/* background-color:#1B4F72; */
+		font-family: 'Roboto', sans-serif;
+	    color: black; 
+	}
+	.form-control {
+        min-height: 41px;
+		background: #fff;
+		box-shadow: none !important;
+		border-color: #e3e3e3;
+		color: black;
+	}
+	.form-control:focus {
+		border-color: #70c5c0;
+	}
+    .form-control, .btn {        
+        border-radius: 2px;
+    }
+	.login-form {
+		width: 350px;
+		margin: 0 auto;
+		padding: 32px 0 30px;
+        color: black;		
+	}
+	.login-form form {
+		color: #7a7a7a;
+		border-radius: 2px;
+    	margin-bottom: 15px;
+        font-size: 16px;
+		color: black;
+        background: #ececec;
+        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+        padding: 40px;	
+        position: relative;	
+    }
+		
+    .login-form .btn {        
+        font-size: 16px;
+        font-weight: bold;
+		background:  #000428 ;
+		border: 2px;
+		margin-bottom: 20px;
+		
+    }
+	.login-form .btn:hover, .login-form .btn:focus {
+		background-color:#49c1a2;
+        outline: none !important;
+	}    
+	.login-form a {
+		color: #fff;
+		text-decoration: underline;
+	}
+	.login-form form a {
+		color: #7a7a7a;
+		text-decoration: none;
+	}
+	.login-form form a:hover {
+		text-decoration: underline;
+	} 
+.table {
+  width: 600px;
+  position: right;	
+}
+ .table-dark:hover {background-color: #000428;} 
+ #btn1 {
+    float:right;
+	padding-right:37%;
+   }
+</style>
 </head>
 <body>
-
-
-<div class="container">
+<center> <div class="container">
   <h2>Complaint Table</h2>         
-  <table class="table table-hover table-bordered ">
+  <table class="table table-bordered ">
     <thead class="thead-dark">
       <tr>
         <th class="col-sd-1">Complaint Id</th>
@@ -28,16 +102,17 @@
       {% endfor %}
       </tbody>
   </table>
-</div>
-  <form  style="padding-left:120px;padding-top: 30px;" action="/assign" method="POST">
-    
+</div> </center>
+
+<div class="login-form">
+ <form action="/auth" method="post">
     <div class="form-group">
-       <label for="complaintId">Complaint Number:</label>
-       <input type="textfield" class="form-control" id="complaintId" name="complaintId" placeholder="Enter complaintId" style="width:300px;">
-    </div>
+    <label for="enggId">Complaint Number </label>
+	<input type="text" class="form-control" id="complaintId" name="complaintId" placeholder="Complaint Id" required="required">
+        </div>
 
     <div class="form-group">
-       <label for="enggId">Engineer:</label>
+       <label for="enggId">Engineer</label>
         <select class="form-control" id="enggId" name="enggId">
             <option>Select Engineer</option>
             {% for engineer in engineers %}
@@ -46,12 +121,16 @@
         </select> 
     </div>
   
-    <button type="submit" style="border:1px solid black; " class="btn btn-default">Send</button>
-  <a href="/logout">Logout</a>
+    <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Send</button>
+        </div>
+		<div id="btn1">
+    <button type="button" class="btn1 btn-default btn-sm">
+          <span class="glyphicon glyphicon-log-out"></span> Log out
+        </button>
+		</div>
   </form>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</div>
+
 </body>
-</html>
+</html>                            
